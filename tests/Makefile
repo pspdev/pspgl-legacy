@@ -7,7 +7,8 @@ RM = rm -f
 
 PSPPATH := $(shell psp-config --pspsdk-path)
 PSPGL_LFLAGS = -lglut -lGLU -lGL -lm -lc -lpsputility -lpspdebug -lpspge -lpspdisplay -lpspctrl -lpspsdk \
-	-lpspvfpu -lpsplibc -lpspuser -lpspkernel -lpsprtc
+	-lpspvfpu -lpspuser -lpspkernel -lpsprtc
+
 CFLAGS = -std=gnu99 -fsingle-precision-constant -g -Wall -O2 \
 	-MD -MF $(DEPDIR)/$(basename $@).d -I.. -I$(PSPPATH)/include
 LDFLAGS = -g -Wall -L.. -L$(PSPPATH)/lib
