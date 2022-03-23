@@ -4,12 +4,9 @@ pspGL is a pure, minimal, hardware-accelerated implementation of something like
 OpenGL for the Playstation Portable. Before you are able to compile it, you
 need to set up a PSP toolchain and SDK as described on http://pspdev.org.
 
-Export PSP_MOUNTDIR=<your_PSP_mountpoint> and PSP_REVISION=<your_PSP_revision>.
-Then type 'make' to build, 'make -C <demodir> install' to build and install one
+Type 'make' to build, 'make -C <demodir> install' to build and install one
 of the demos.  Here an example how to build for a 1.50 PSP on MacOS-X:
 
-   $ export PSP_MOUNTDIR=/Volumes/PSP
-   $ export PSP_REVISION=1.50
    $ make && make -C tests clean install
    $ make && make -C test-glut clean install
 
