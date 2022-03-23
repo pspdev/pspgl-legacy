@@ -78,11 +78,11 @@ psp-setup-%.o: psp-setup.c
 
 %.o: %.raw
 	(sym=`echo $(notdir $*) | tr '-' '_'`; \
-	 echo -e ".data\n.global $${sym}_start\n$${sym}_start:\n\t.incbin \"$<\"" | $(AS) -o $@)
+	 printf ".data\n.global $${sym}_start\n$${sym}_start:\n\t.incbin \"$<\"" | $(AS) -o $@)
 
 %.o: %.dxt3
 	(sym=`echo $(notdir $*) | tr '-' '_'`; \
-	 echo -e ".data\n.global $${sym}_start\n.global $${sym}_end\n$${sym}_start:\n\t.incbin \"$<\"\n$${sym}_end:\n" | $(AS) -o $@)
+	 printf ".data\n.global $${sym}_start\n.global $${sym}_end\n$${sym}_start:\n\t.incbin \"$<\"\n$${sym}_end:\n" | $(AS) -o $@)
 
 textab.h: $(DXTTEX) Makefile
 	(for i in $(DXTTEX); do b=`basename $$i .dxt3`; echo "extern unsigned char $${b}_start[], $${b}_end[];"; done; \
