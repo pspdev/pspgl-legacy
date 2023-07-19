@@ -7,7 +7,8 @@ RM = rm -f
 
 PSPPATH := $(shell psp-config --pspsdk-path)
 PSPGL_LFLAGS = -lglut -lGLU -lGL -lm -lc -lpsputility -lpspdebug -lpspge -lpspdisplay -lpspctrl -lpspsdk \
-	-lpspvfpu -lpsplibc -lpspuser -lpspkernel -lpsprtc
+	-lpspvfpu -lpspuser -lpspkernel -lpsprtc
+
 CFLAGS = -std=gnu99 -fsingle-precision-constant -g -Wall -O2 \
 	-MD -MF $(DEPDIR)/$(basename $@).d -I.. -I$(PSPPATH)/include
 LDFLAGS = -g -Wall -L.. -L$(PSPPATH)/lib
@@ -78,11 +79,11 @@ psp-setup-%.o: psp-setup.c
 
 %.o: %.raw
 	(sym=`echo $(notdir $*) | tr '-' '_'`; \
-	 echo -e ".data\n.global $${sym}_start\n$${sym}_start:\n\t.incbin \"$<\"" | $(AS) -o $@)
+	 printf ".data\n.global $${sym}_start\n$${sym}_start:\n\t.incbin \"$<\"" | $(AS) -o $@)
 
 %.o: %.dxt3
 	(sym=`echo $(notdir $*) | tr '-' '_'`; \
-	 echo -e ".data\n.global $${sym}_start\n.global $${sym}_end\n$${sym}_start:\n\t.incbin \"$<\"\n$${sym}_end:\n" | $(AS) -o $@)
+	 printf ".data\n.global $${sym}_start\n.global $${sym}_end\n$${sym}_start:\n\t.incbin \"$<\"\n$${sym}_end:\n" | $(AS) -o $@)
 
 textab.h: $(DXTTEX) Makefile
 	(for i in $(DXTTEX); do b=`basename $$i .dxt3`; echo "extern unsigned char $${b}_start[], $${b}_end[];"; done; \
